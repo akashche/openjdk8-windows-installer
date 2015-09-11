@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<installation version="1.0">
+    <info>
+        <appname>OpenJDK 8 u60</appname>
+        <appversion>redhat-experimental</appversion>
+        <uninstaller path="$INSTALL_PATH/uninstall" name="uninstall.jar"/>
+    </info>
+
+    <guiprefs width="640" height="480" resizable="no">
+        <laf name="looks">
+            <os family="windows"/>
+        </laf>
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="useHeadingForSummary" value="yes"/>
+        <modifier key="headingLineCount" value="2"/>
+        <modifier key="headingFontSize" value="1.5"/>
+        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+        <modifier key="headingPanelCounter" value="text"/>
+        <modifier key="headingPanelCounterPos" value="inHeading"/>
+    </guiprefs>
+
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="HTMLLicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+
+    <resources>
+        <res id="customicons.xml" src="customicons.xml"/>
+        <res id="JFrameIcon.png" src="logo.png"/>
+        <res id="host.png" src="logo.png"/>
+        <res id="HTMLLicencePanel.licence" src="license.txt"/>
+        <res id="TargetPanel.dir.windows" src="default-install-dir-win.txt"/>
+    </resources>
+
+    <packs>
+        <pack name="OpenJDK Runtime Environment installation files" required="yes" loose="true">
+            <description>OpenJDK Runtime Environment installation files</description>
+            <file src="jre" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="OpenJDK Development Kit installation files"
+            required="no">
+            <description>OpenJDK Development Kit installation files</description>
+            <fileset dir="j2sdk-image" targetdir="$INSTALL_PATH"/>
+            <file src="uninstall" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="OpenJDK uninstaller files" required="yes">
+            <description>OpenJDK uninstaller files</description>
+            <file src="uninstall" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="Set environment variables (user settings)"
+            required="no"
+            preselected="no">
+            <description>
+Add "JAVA_HOME" environment variable and append "JAVA_HOME/bin" and "JAVA_HOME/jre/bin" to "PATH" environment variable. All changes will be done to user (local) environment variables and should not require administrator privileges.
+            </description>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/setx.exe"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="JAVA_HOME"/>
+                    <arg value="&quot;$INSTALL_PATH&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/setx.exe"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="JAVA_HOME"/>
+                    <arg value="&quot;&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="\/au"/>
+                    <arg value="&quot;$INSTALL_PATH\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="\/ru"/>
+                    <arg value="&quot;$INSTALL_PATH\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="\/au"/>
+                    <arg value="&quot;$INSTALL_PATH\jre\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="\/ru"/>
+                    <arg value="&quot;$INSTALL_PATH\jre\bin&quot;"/>
+                </args>
+            </executable>
+        </pack>
+        <pack name="Set environment variables (global settings)" 
+              required="no"
+              preselected="yes">
+            <description>
+Add "JAVA_HOME" environment variable and append "JAVA_HOME/bin" and "JAVA_HOME/jre/bin" to "PATH" environment variable. All changes will be done to global environment variables and may require administrator privileges.
+            </description>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/setx.exe"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="JAVA_HOME"/>
+                    <arg value="&quot;$INSTALL_PATH&quot;"/>
+                    <arg value="-m"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/setx.exe"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="JAVA_HOME"/>
+                    <arg value="&quot;&quot;"/>
+                    <arg value="-m"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="\/as"/>
+                    <arg value="&quot;$INSTALL_PATH\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="\/rs"/>
+                    <arg value="&quot;$INSTALL_PATH\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="\/as"/>
+                    <arg value="&quot;$INSTALL_PATH\jre\bin&quot;"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/pathman.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="\/rs"/>
+                    <arg value="&quot;$INSTALL_PATH\jre\bin&quot;"/>
+                </args>
+            </executable>
+        </pack>
+        <pack name="Add registry keys (global settings)" 
+              required="no"
+              preselected="yes">
+              <description>
+Add registry keys "HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8" and "HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8" with information about this installation. These entries may be used by java application launchers (e.g. launch4j). Key will be added to global registry branch and may require administrator privileges. On uninstallation registry values under this key will be cleared, but key itself will be left intact.
+            </description>
+            <!-- JRE JavaHome -->
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="add"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/t"/>
+                    <arg value="reg_sz"/>
+                    <arg value="\/d"/>
+                    <arg value="$INSTALL_PATH/jre"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <!-- JRE RuntimeLib -->
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="RuntimeLib"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="add"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="RuntimeLib"/>
+                    <arg value="\/t"/>
+                    <arg value="reg_sz"/>
+                    <arg value="\/d"/>
+                    <arg value="$INSTALL_PATH/jre/bin/server/jvm.dll"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="RuntimeLib"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <!-- JRE MicroVersion -->
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="add"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/t"/>
+                    <arg value="reg_dword"/>
+                    <arg value="\/d"/>
+                    <arg value="0"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Runtime Environment/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <!-- JDK JavaHome -->
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="add"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/t"/>
+                    <arg value="reg_sz"/>
+                    <arg value="\/d"/>
+                    <arg value="$INSTALL_PATH"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="JavaHome"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <!-- JDK MicroVersion -->
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="postinstall"
+                        keep="true">
+                <args>
+                    <arg value="add"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/t"/>
+                    <arg value="reg_dword"/>
+                    <arg value="\/d"/>
+                    <arg value="0"/>
+                </args>
+            </executable>
+            <executable targetfile="$INSTALL_PATH/uninstall/tools/reg.cmd"
+                        stage="uninstall"
+                        keep="true">
+                <args>
+                    <arg value="delete"/>
+                    <arg value="&quot;HKEY_LOCAL_MACHINE/Software/JavaSoft/Java Development Kit/1.8&quot;"/>
+                    <arg value="\/v"/>
+                    <arg value="MicroVersion"/>
+                    <arg value="\/f"/>
+                </args>
+            </executable>
+        </pack>
+    </packs>
+</installation>
